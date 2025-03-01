@@ -1,4 +1,9 @@
+@import url("https://font.sec.miui.com/font/css?family=MiSans:400,700:MiSans");
 @import "tailwindcss";
+
+@theme {
+  --default-font-family: "MiSans", sans-serif;
+}
 
 .bg-gradient {
   background-image: linear-gradient(
