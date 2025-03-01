@@ -7,7 +7,7 @@ function Content() {
       <section className="text-white text-4xl md:text-[69px] font-bold tracking-[0.29em]">
         生物医药智能空间
       </section>
-      <section className="mt-5 flex gap-10 flex-wrap justify-center lg:justify-start">
+      <section className="mt-5 flex gap-10 flex-wrap lg:flex-nowrap justify-center lg:justify-start">
         <BiomedicalSvg />
         <ExplorerAICosmosSvg />
       </section>

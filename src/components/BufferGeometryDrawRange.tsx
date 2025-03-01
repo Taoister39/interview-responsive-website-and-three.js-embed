@@ -1,28 +1,41 @@
 import { init } from "@/utils/example";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
-interface BufferGeometryDrawRangeProps {
-  width: number;
-  height: number;
-}
+function BufferGeometryDrawRange() {
+  const [mainHeight, setMainHeight] = useState(100);
+  const [mainWidth, setMainWidth] = useState(100);
 
-function BufferGeometryDrawRange({
-  width,
-  height,
-}: BufferGeometryDrawRangeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const drawRangeSize = useMemo(
+    () => (mainHeight > mainWidth ? mainHeight : mainWidth) - 16,
+    [mainHeight, mainWidth]
+  );
+
+  useEffect(() => {
+    const resizeHandle = () => {
+      if (containerRef.current) {
+        setMainHeight(containerRef.current.offsetHeight);
+        setMainWidth(containerRef.current.offsetWidth);
+      }
+    };
+
+    requestAnimationFrame(() => resizeHandle());
+
+    window.addEventListener("resize", resizeHandle);
+
+    return () => {
+      window.removeEventListener("resize", resizeHandle);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     if (containerRef.current) {
-      const remove = init(containerRef.current, width, height);
-
-      return () => remove();
+      return init(containerRef.current, drawRangeSize, drawRangeSize);
     }
+  }, [drawRangeSize]);
 
-    return () => {};
-  }, [height, width]);
-
-  return <div ref={containerRef}></div>;
+  return <div className="w-full h-full" ref={containerRef}></div>;
 }
 
 export default BufferGeometryDrawRange;

@@ -3,35 +3,8 @@ import LogoSvgIcon from "@/assets/logo.svg?react";
 import BufferGeometryDrawRange from "@/components/BufferGeometryDrawRange";
 import Content from "@/components/Content";
 import Slogan from "@/components/Slogan";
-import { useEffect, useMemo, useRef, useState } from "react";
 
 function App() {
-  const mainRef = useRef<HTMLElement>(null);
-  const [mainHeight, setMainHeight] = useState(100);
-  const [mainWidth, setMainWidth] = useState(100);
-
-  const drawRangeSize = useMemo(
-    () => (mainHeight > mainWidth ? mainWidth : mainHeight),
-    [mainHeight, mainWidth]
-  );
-
-  useEffect(() => {
-    const resizeHandle = () => {
-      if (mainRef.current) {
-        setMainHeight(mainRef.current.offsetHeight);
-        setMainWidth(mainRef.current.offsetWidth);
-      }
-    };
-
-    resizeHandle();
-
-    window.addEventListener("resize", resizeHandle);
-
-    return () => {
-      window.removeEventListener("resize", resizeHandle);
-    };
-  }, []);
-
   return (
     <div className="bg-gradient min-h-screen w-full flex flex-col">
       <header className="flex-wrap justify-center gap-y-2 flex px-12 items-center md:justify-start mt-12">
@@ -44,19 +17,13 @@ function App() {
         <Slogan />
       </header>
 
-      <main
-        ref={mainRef}
-        className="px-0 sm:px-31 my-16 flex flex-col xl:flex-row justify-center items-center grow gap-35.5"
-      >
+      <main className="px-0 sm:px-31 my-16 flex flex-col xl:flex-row justify-center items-center grow gap-35.5">
         <aside>
           <Content />
         </aside>
 
-        <section>
-          <BufferGeometryDrawRange
-            width={drawRangeSize - 16}
-            height={drawRangeSize - 16}
-          />
+        <section className="w-full h-full">
+          <BufferGeometryDrawRange />
         </section>
       </main>
 
