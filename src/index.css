@@ -13,3 +13,7 @@
 .bg-button {
   background: linear-gradient(90deg, #4800ff 0%, #7802ff 98%);
 }
+
+.text-last-justify {
+  text-align-last: justify;
+}
